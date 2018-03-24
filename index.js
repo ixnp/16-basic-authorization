@@ -1,28 +1,13 @@
 const express = require('express');
 const PORT = process.env.PORT || 3000;
 const mongoose = require('mongoose');
+const User = require('./model/userSchema.js');
+
 mongoose.connect('mongodb://localhost/lab16basicAuth');
 
 const app = express();
 //User Model
-const schema = new mongoose.Schema({
-    username:{
-        type: String,
-        required: true,
-        unique:true
-    },
-    email:{
-        type: String,
-        required: true,
-        unique:true
-    },
-    password:{//TODO: hash
-        type: String,
-        required: true,
-    }
-});
 
-const User = mongoose.model('User', schema);
 
 const router = express.Router();
 router.get('/signin',(req, res)=>{
