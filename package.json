@@ -1,0 +1,31 @@
+{
+  "name": "16-basic-authorization",
+  "version": "1.0.0",
+  "description": "![CF](https://camo.githubusercontent.com/70edab54bba80edb7493cad3135e9606781cbb6b/687474703a2f2f692e696d6775722e636f6d2f377635415363382e706e67) 16: Basic Auth\r ===",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ixnp/16-basic-authorization.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ixnp/16-basic-authorization/issues"
+  },
+  "homepage": "https://github.com/ixnp/16-basic-authorization#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.11",
+    "superagent": "^3.8.2"
+  }
+}
