@@ -23,6 +23,7 @@
   "homepage": "https://github.com/ixnp/16-basic-authorization#readme",
   "dependencies": {
     "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "mongoose": "^5.0.11",
     "superagent": "^3.8.2"

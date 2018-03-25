@@ -21,6 +21,11 @@ const User = new mongoose.Schema({
   }
 });
 
+let userInfo = User.username + ':' + User.password;
+
+let encoding = btoa(userInfo);
+let decoded = atob(encoding);
+
 User.pre('save', function (next) {
   let user = this;
   this.hashedPassword(user.password, function(err, hashed){
@@ -48,5 +53,8 @@ User.method.hashPassword = function (userPassword, cb){
   });
 };
 
+
+
+//write a fun to validate password//
 
 module.exports = mongoose.model('User', User);
