@@ -1,12 +1,15 @@
 'use strict';
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/lab16bcrypttest');
+mongoose.connect('mongodb://localhost/lab16subtwo');
 const bcrypt = require('bcrypt');
-const cryto = require('crypto');
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const createError = require('http-errors');
 
-const User = new mongoose.Schema({
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -29,62 +32,52 @@ const User = new mongoose.Schema({
 
 
 
-User.pre('save', function (next) {
-  let user = this;
-  this.hashedPassword(user.password, function(err, hashed){
-    if(err){
-      console.log(err);
-    }
-    user.password = hashed;
-  });
-  console.log('in userSchema hashed user', user);
-  next();
-});
-
-User.method.hashPassword = function (userPassword){
+userSchema.methods.generatePasswordHash = function(password){
   return new Promise((resolve, reject) => {
-    bcrypt.hash(password, 10, (err,hash) =>{
+    bcrypt.hash(password, 10, (err, hash) =>{
       if(err) return reject(err);
       this.password = hash;
       resolve(this);
     });
   });
 };
-User.methods.compareHashedPassword = function(password) {
+userSchema.methods.compareHashedPassword = function(password) {
   return new Promise((resolve, reject) => {
-    bcrypt.compare(password, this.password, (err, valid) =>{
+    bcrypt.compare(password, this.password, (err, valid) => {
       if(err) return reject(err);
       if(!valid) return reject(createError(401, 'invalid password'));
+      resolve(this);
     });
   });
 };
 
-User.methods.generatefindHash = function () {
+userSchema.methods.generatefindHash = function () {
   return new Promise ((resolve, reject) => {
-      let tries = 0;
-      _generateFindHash.call(this);
-      function _generateFindHash() {
-        this.findHash = crypto.randomBytes(32).toString('hex');
-        this.save()
+    let tries = 0;
+    _generateFindHash.call(this);
+    function _generateFindHash() {
+      this.findHash = crypto.randomBytes(32).toString('hex');
+      this.save()
         .then(() => resolve(this.findHash))
         .catch(err => {
-          if(tries > 30) return reject(err);
+          if(tries > 3) return reject(err);
           tries++;
           _generateFindHash.call(this);
         });
-      }
+    }
   });
 };
 
-User.methods.generateToken = function(){
+userSchema.methods.generateToken = function(){
   return new Promise((resolve, reject)=>{
     this.generatefindHash()
     .then(findHash => resolve(jwt.sign({token: findHash}, process.env.APP_SECRET)))
+    .catch(err => reject(err));
   });
-}
+};
 
 
 
-//write a fun to validate password//
 
-module.exports = mongoose.model('User', User);
+
+module.exports = mongoose.model('User', userSchema);
