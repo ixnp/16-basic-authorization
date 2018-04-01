@@ -17,7 +17,7 @@ userRouter.get('/api/signin/:id', function(req, res){
     User.findById(username);
     return user.password; 
   }; 
-   
+   //delete this probably i put a new compair method in User//
   bcrypt.compare(password, hash,(err, res) => {
     if(err){
       res.sendStatus(400);
@@ -34,6 +34,7 @@ userRouter.get('/api/signin/:id', function(req, res){
 
 userRouter.post('/api/signup',jsonParser, function(req, res){
   new User(req.body).save()
+  console.log('user', req.body)
   .then(() => res.sendStatus(200))
   .catch(()=> res.sendStatus(400));
 });

@@ -1,12 +1,21 @@
 'use strict';
+
 const express = require('express');
-const PORT = process.env.PORT || 3000;
+
 const mongoose = require('mongoose');
-const userRouter = require('./route/user-router.js');
-mongoose.connect('mongodb://localhost/lab16basicAuth');
+const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+const jsonwebtoken = require('jsonwebtoken');
+// const userRouter = require('./route/user-router.js');
+
 
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+mongoose.connect(process.env.MONGODB_URI);
 
-app.use(userRouter);
-app.listen(PORT, () => console.log(`http//localhost:${PORT}`));
+
+
+// app.use(userRouter);
+const server = app.listen(PORT, () => console.log(`http//localhost:${PORT}`));
+server.ixRunning = true;
