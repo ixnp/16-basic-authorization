@@ -3,6 +3,7 @@ const superagent = require('superagent');
 const mongoose = require('mongoose');
 const User = require('../model/userSchema.js');
 
+
 const PORT = process.env.PORT || 3000;
 const SERVER_URL = 'http://localhost:' + PORT;
 const SIGNUP_URL = SERVER_URL + '/api/signup';
@@ -20,6 +21,7 @@ function getUserParams() {
 describe('/api/signup', () => {
   it('should return status 400 if missing username', (done) => {
     let params = getUserParams();
+    console.log(params); 
     delete params['username'];
 
     superagent.post(SIGNUP_URL)
@@ -71,7 +73,7 @@ describe('/api/signup', () => {
 });
 
 describe('/api/signin', () => {
-  it.skip('should return 401 unauthorized if password is incorrect', (done) => {
+  it('should return 401 unauthorized if password is incorrect', (done) => {
     let params = getUserParams();
 
     superagent.post(SIGNUP_URL)
@@ -94,7 +96,7 @@ describe('/api/signin', () => {
   });
 
 
-  it.skip('should return 200 if username and password are', (done) => {
+  it('should return 200 if username and password are', (done) => {
     let params = getUserParams();
 
     superagent.post(SIGNUP_URL)

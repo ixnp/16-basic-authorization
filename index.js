@@ -25,5 +25,5 @@ mongoose.connect(process.env.MONGODB_URI);
 app.use(cors());
 app.use(morgan('dev'));
 app.use(userRouter);
-
+app.use(errors);
 app.listen(PORT, () => console.log(`http//localhost:${PORT}`));
