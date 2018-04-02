@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/lab16subtwo');
+mongoose.connect('mongodb://localhost/lab17subtwo');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
@@ -71,7 +71,7 @@ userSchema.methods.generatefindHash = function () {
 userSchema.methods.generateToken = function(){
   return new Promise((resolve, reject)=>{
     this.generatefindHash()
-    .then(findHash => resolve(jwt.sign({token: findHash}, process.env.APP_SECRET)))
+    .then(findHash => resolve(jwt.sign({token: findHash}, process.env.SECRET)))
     .catch(err => reject(err));
   });
 };
