@@ -7,11 +7,12 @@ require('jest');
 require('dotenv').config();
 
 const SERVER_URL = 'http://localhost:3000';
-
-const exampleUser = {
-  username: 'Rose',
-  password: 'cat',
-  email: 'bestCat@gmail.com'
+function getUserParams() {
+  return {
+    username: 'Rose',
+    password: 'cat',
+    email: 'bestCat@gmail.com'
+  };
 };
 
 const exampleGame = {
@@ -27,4 +28,16 @@ describe('handel token less request', () =>{
       done();
     });
   });
+  test('sends 401 for POST requests if no token was provided', (done) =>{
+    let newUser = getUserParams();
+
+    superagent.post(SERVER_URL + '/api/game')
+    .set('Content-Type', 'application/json')
+    .send(newUser)
+    .end((err, res) =>{
+      expect(res.status).toBe(401);
+      done();
+    });
+  });
 });
+
